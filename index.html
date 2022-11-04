@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Enter the name of your city</h1>
+        <input type="text" id="city-input">
+        <button id="city-request">show me the weather</button>
+    </header>
+    <main>
+        <div class="tests"></div>
+    </main>
+
+<script>
+let cityInput = document.querySelector('#city-input');
+let buttonCity = document.querySelector('#city-request');
+let outputElem = document.querySelector('.tests');
+
+let lon = '';
+let lat = '';
+let city = '';
+let key = '';
+let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=dfaeaf926670ebeb89235ac4677dbee0`;
+
+
+buttonCity.addEventListener('click', (e) => {
+    city = cityInput.value;
+    let urlCity = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=dfaeaf926670ebeb89235ac4677dbee0`
+    console.log(urlCity);
+
+    let promise = fetch(urlCity);
+
+    promise
+        .then(response => response.json())
+        .then(json => {
+            lon = json[0].lon;
+            lat = json[0].lat;
+            // console.log(lon + ' ' + lat)
+            cityInput.innerHTML = '';
+            weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=dfaeaf926670ebeb89235ac4677dbee0`
+            console.log(weatherUrl);
+
+            fetch(weatherUrl)
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json)
+                    
+                })
+        });
+            
+  
+})
+
+function createWeather (obj) {
+    
+    
+}
+</script>
+</body>
+</html>
